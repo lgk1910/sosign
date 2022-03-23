@@ -10,21 +10,21 @@ serial.onDataReceived(serial.delimiters(Delimiters.Hash), function () {
 })
 let cmd = ""
 let butt = 0
-basic.forever(function () {
-	
-})
+led.enable(false)
 basic.forever(function () {
     if (NPNBitKit.Button(DigitalPin.P0)) {
         if (butt == 0) {
             butt = 1
+            NPNBitKit.Led2ColorAnalog(AnalogPin.P2, 0, AnalogPin.P1, 100)
         } else {
             butt = 0
+            NPNBitKit.Led2ColorAnalog(AnalogPin.P2, 100, AnalogPin.P1, 0)
         }
         serial.writeString("!" + "1" + ":" + "BUTT" + ":" + butt + "#")
-        NPNBitKit.Led2ColorAnalog(AnalogPin.P2, 0, AnalogPin.P1, 100)
-        basic.pause(500)
     }
-    NPNBitKit.DHT11Read(DigitalPin.P2)
-    serial.writeString("!" + "1" + ":" + "LIGHT" + ":" + NPNBitKit.AnalogLight(AnalogPin.P2) + "#")
-    basic.pause(500)
+    serial.writeString("!" + "1" + ":" + "LIGHT" + ":" + NPNBitKit.AnalogLight(AnalogPin.P3) + "#")
+    if (NPNBitKit.AnalogLight(AnalogPin.P3) <= 150) {
+        NPNBitKit.Relay(DigitalPin.P4, true, 100)
+    }
+    basic.pause(1000)
 })
