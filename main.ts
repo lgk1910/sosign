@@ -27,6 +27,6 @@ basic.forever(function () {
             NPNBitKit.Led2ColorAnalog(AnalogPin.P2, 100, AnalogPin.P1, 0)
             serial.writeString("!" + "1" + ":" + "BUTT" + ":" + butt + "#")
         }
+        basic.pause(500)
     }
-    basic.pause(1000)
 })
